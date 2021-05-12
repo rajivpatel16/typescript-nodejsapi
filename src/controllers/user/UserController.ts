@@ -1,35 +1,37 @@
-import { Request, Response, NextFunction } from 'express';
-import UserInterface from '../../Interface/UserInterface';
+import { Request, Response, NextFunction } from "express";
+import UserInterface from "../../Interface/UserInterface";
+import { userSchema } from '../../validators/UserValidator';
+
 
 class UserController {
-    private readonly userRepo:any
-    constructor(UserRepoData: UserInterface) {
-        console.log(this)
-        this.userRepo = UserRepoData;
-    }
+  private readonly userRepo: UserInterface;
+  constructor(UserRepoData: UserInterface) {
+    this.userRepo = UserRepoData;
+  }
 
-    post(req:Request, res:Response) {
-        try {
-            const data = req.body
-            const item = this.userRepo.addUser(data)
-            res.status(200).send("Done");
-        } catch ( error  ) {
-            console.log(error.stack)
-        }
+  post(req: Request, res: Response) {
+    try {
+      const data = userSchema.validate(req.body) ;
+     if(data.error) {
+        throw new Error(data.error)
        
+     }
+      const item = this.userRepo.addUser(data);
+      res.status(200).send("Done");
+    } catch (error) {
+        console.log(error.stack);
+        res.status(500).send(error.stack); 
     }
+  }
 
-    findAllUser(req:Request, res:Response):any {
-        try {
-            console.log(this)
-            const item = this.userRepo.getAllUser();
-            res.send(item);
-        }
-        catch ( error  ) {
-            console.log(error.stack)
-        }
+  findAllUser(req: Request, res: Response): any {
+    try {
+      const item = this.userRepo.getAllUser();
+      res.send(item);
+    } catch (error) {
+      console.log(error.stack);
     }
-
+  }
 }
 
 export default UserController;
