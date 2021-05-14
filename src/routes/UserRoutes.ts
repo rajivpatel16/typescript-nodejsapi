@@ -12,7 +12,7 @@ const userRoutes = express.Router();
 //     return userController.post(req, res)
 // });
 
-userRoutes.post('/v1/users',  userController.post.bind(userController))
-userRoutes.get('/v1/users', userController.findAllUser.bind(userController));
+userRoutes.post('/users',  userController.post.bind(userController))
+userRoutes.get('/users', userController.findAllUser.bind(userController));
 
 export default userRoutes;

@@ -15,7 +15,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors(origin))
 app.use(helmet())
-app.use(userRoutes);
+app.use('/v1',userRoutes);
 
 
 app.listen(5000, () => console.log("Server start"))
