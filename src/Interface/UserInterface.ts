@@ -1,5 +1,5 @@
 interface UserInterface {
-  addUser(data: any): Array<any>;
+  addUser(data: any): void;
   getAllUser(): Array<any>;
 }
 

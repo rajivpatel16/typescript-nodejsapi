@@ -13,6 +13,8 @@ const userRoutes = express.Router();
 // });
 
 userRoutes.post('/users',  userController.post.bind(userController))
+//userRoutes.post('/users',  userController.post)
+
 userRoutes.get('/users', userController.findAllUser.bind(userController));
 
 export default userRoutes;

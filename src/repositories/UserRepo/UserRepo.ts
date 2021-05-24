@@ -1,4 +1,5 @@
 import UserInterface from "../../Interface/UserInterface";
+import * as fs from "fs";
 /*
   Need to call here Model in Repo to access the database
   */
@@ -6,8 +7,24 @@ import UserInterface from "../../Interface/UserInterface";
 class UserRepo implements UserInterface {
   userArray: any = [];
 
-  addUser(user: object) {
-    return this.userArray.push(user);
+  addUser(data: Array<any>): void {
+    return fs.writeFile(
+      "user.json",
+      JSON.stringify(data),
+      {
+        encoding: "utf8",
+        flag: "w",
+        mode: 0o666,
+      },
+      (err) => {
+        if (err) console.log(err);
+        else {
+          console.log("File written successfully\n");
+          console.log("The written has the following contents:");
+          console.log(fs.readFileSync("user.json", "utf8"));
+        }
+      }
+    );
   }
 
   getAllUser() {

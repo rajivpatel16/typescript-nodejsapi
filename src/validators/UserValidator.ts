@@ -2,7 +2,8 @@ import { Request, Response, NextFunction } from "express";
 
 const Joi = require("joi");
 
-export const userSchema = Joi.object({
+export const userSchema = Joi.array().items(
+  Joi.object({
   name: Joi.string().required(),
   email: Joi.string().custom((value:string, helpers:any) => {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -10,7 +11,8 @@ export const userSchema = Joi.object({
       return helpers.message('Enter currect email address');
     } 
     return value;
-  }),
+  }
+  ),
   age:  Joi.number().custom((value:number , helpers:any) => {
         if(value <= 18) {
           return helpers.message('Age must be greater than 18');
@@ -19,8 +21,10 @@ export const userSchema = Joi.object({
           return helpers.message('Age must be less than or equal to 50');
         }
         return value;
+  }
+  )
   })
-});
+);
 
 export const validate = (schema: object) => (
   request: Request,
