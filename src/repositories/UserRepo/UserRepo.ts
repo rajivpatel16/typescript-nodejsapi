@@ -7,7 +7,7 @@ import * as fs from "fs";
 class UserRepo implements UserInterface {
   userArray: any = [];
 
-  addUser(data: Array<any>): void {
+  addUser(data: Array<Object>): void {
     return fs.writeFile(
       "user.json",
       JSON.stringify(data),
@@ -27,8 +27,13 @@ class UserRepo implements UserInterface {
     );
   }
 
-  getAllUser() {
-    return this.userArray;
+  getAllUser(callback:Function): void {
+     return fs.readFile('user.json', 'utf8', function(err, data){
+      if(err) {
+        console.log(err)
+      }
+      return callback(data);
+    });
   }
 }
 

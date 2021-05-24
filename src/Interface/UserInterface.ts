@@ -1,6 +1,6 @@
 interface UserInterface {
   addUser(data: any): void;
-  getAllUser(): Array<any>;
+  getAllUser(callback:Function): void;
 }
 
 export default UserInterface;

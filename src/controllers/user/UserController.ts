@@ -26,10 +26,12 @@ class UserController {
     }
   }
 
-  findAllUser(req: Request, res: Response): any {
+   findAllUser(req: Request, res: Response) {
     try {
-      const item = this.userRepo.getAllUser();
-      res.send(item);
+      this.userRepo.getAllUser((data:any) => {
+        res.send(data)
+      });
+      
     } catch (error) {
       console.log(error.stack);
     }
